@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { DataProvider } from './context/DataContext';
 
 // Home Components
@@ -20,64 +20,87 @@ import EditWatchListItem from './components/watchlist/EditWatchListItem';
 import DeleteWatchListItem from './components/watchlist/DeleteWatchListItem';
 import WatchListDetails from './components/watchlist/WatchListDetails';
 
-function App() {
-  return (
-    <DataProvider>
-      <Router>
-        <header>
-          <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div className="container">
-              <Link className="navbar-brand" to="/">Duncan Safe Product</Link>
-              <div className="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul className="navbar-nav flex-grow-1">
-                  <li className="nav-item">
-                    <Link className="nav-link text-dark" to="/">Product List</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link text-dark" to="/watchlist">Watch List</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link text-dark" to="/contact">Contact</Link>
-                  </li>
-                </ul>
-              </div>
+// Dynamic Footer Sub-component
+const DynamicFooter = () => {
+    const [showSecret, setShowSecret] = useState(false);
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.pathname === '/contact') {
+            const timer = setTimeout(() => setShowSecret(true), 2000);
+            return () => clearTimeout(timer);
+        } else {
+            setShowSecret(false);
+        }
+    }, [location]);
+
+    return (
+        <footer className="footer mt-auto py-3 bg-white border-top shadow-sm">
+            <div className="container d-flex justify-content-between align-items-center">
+                <span className="text-muted">
+                    &copy;&nbsp;<span id="copyright">2026 Duncan Safe App</span>&nbsp;-&nbsp;
+                    <Link to="/contact">Contact</Link>
+                </span>
+                {showSecret && (
+                    <span className="badge badge-success p-2 animate__animated animate__fadeIn" data-cy="secretMessage">
+                        Duncan Safe Product!
+                    </span>
+                )}
             </div>
-          </nav>
-        </header>
-
-        <div className="container">
-          <main role="main" className="pb-3">
-            <Routes>
-              {/* Home Routes */}
-              <Route path="/" element={<ProductList />} />
-              <Route path="/welcome" element={<Home />} />
-              <Route path="/contact" element={<Contact />} />
-
-              {/* Product Routes */}
-              <Route path="/products/create" element={<CreateProduct />} />
-              <Route path="/products/edit/:id" element={<EditProduct />} />
-              <Route path="/products/delete/:id" element={<DeleteProduct />} />
-              <Route path="/products/details/:id" element={<ProductDetails />} />
-
-              {/* Watch List Routes */}
-              <Route path="/watchlist" element={<WatchListIndex />} />
-              <Route path="/watchlist/create" element={<CreateWatchListItem />} />
-              <Route path="/watchlist/edit/:id" element={<EditWatchListItem />} />
-              <Route path="/watchlist/delete/:id" element={<DeleteWatchListItem />} />
-              <Route path="/watchlist/details/:id" element={<WatchListDetails />} />
-            </Routes>
-          </main>
-        </div>
-
-        <footer className="border-top footer text-muted">
-          <div className="container">
-            &copy;&nbsp;<span id="copyright">2026 Duncan</span>&nbsp;-&nbsp;
-            <Link to="/contact">Contact</Link>
-          </div>
         </footer>
-      </Router>
-    </DataProvider>
-  );
+    );
+};
+
+function App() {
+    return (
+        <DataProvider>
+            <Router>
+                <div className="d-flex flex-column min-vh-100">
+                    {/* Fixed Navbar with proper Link visibility */}
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+                        <div className="container">
+                            <Link className="navbar-brand d-flex align-items-center" to="/" data-cy="navBrand">
+                                <span className="mr-2"></span>
+                                <span className="font-weight-bold">DUNCAN SAFE APP</span>
+                            </Link>
+                            
+                            {/* Flex-row ensures links don't collapse into a hamburger menu */}
+                            <div className="d-flex flex-row navbar-nav ml-auto">
+                                <Link className="nav-item nav-link px-3" to="/" data-cy="navProducts">Product List</Link>
+                                <Link className="nav-item nav-link px-3" to="/watchlist" data-cy="navWatchlist">Watch List</Link>
+                                <Link className="nav-item nav-link px-3" to="/contact" data-cy="navContact">Contact</Link>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Main Content Area */}
+                    <main role="main" className="container">
+                        <Routes>
+                            {/* Home Routes */}
+                            <Route path="/" element={<ProductList />} />
+                            <Route path="/welcome" element={<Home />} />
+                            <Route path="/contact" element={<Contact />} />
+
+                            {/* Product Routes */}
+                            <Route path="/products/create" element={<CreateProduct />} />
+                            <Route path="/products/edit/:id" element={<EditProduct />} />
+                            <Route path="/products/delete/:id" element={<DeleteProduct />} />
+                            <Route path="/products/details/:id" element={<ProductDetails />} />
+
+                            {/* Watch List Routes */}
+                            <Route path="/watchlist" element={<WatchListIndex />} />
+                            <Route path="/watchlist/create" element={<CreateWatchListItem />} />
+                            <Route path="/watchlist/edit/:id" element={<EditWatchListItem />} />
+                            <Route path="/watchlist/delete/:id" element={<DeleteWatchListItem />} />
+                            <Route path="/watchlist/details/:id" element={<WatchListDetails />} />
+                        </Routes>
+                    </main>
+
+                    <DynamicFooter />
+                </div>
+            </Router>
+        </DataProvider>
+    );
 }
 
 export default App;
