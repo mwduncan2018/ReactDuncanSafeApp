@@ -3,9 +3,26 @@
   --bg-main: #f8fafc;
   --card-bg: #ffffff;
   --text-dark: #1e293b;
-  --match-green: #dcfce7; 
-  --fuzzy-pink: #fce7f3;  
+  
+  /* UPDATED: Bolder Light Mode Highlights */
+  --match-green-light: #86efac; /* Vibrant Mint/Green */
+  --fuzzy-pink-light: #f9a8d4;  /* Vibrant Pink */
+  
   --border-color: #e2e8f0;
+}
+
+/* DARK MODE VARIABLES */
+[data-theme='dark'] {
+  --bg-main: #0f172a;
+  --card-bg: #1e293b;
+  --text-dark: #f1f5f9;
+  --border-color: #334155;
+  
+  --match-green-dark: #065f46;
+  --fuzzy-pink-dark: #86198f;
+  
+  --btn-primary-bg: #60a5fa;
+  --btn-warning-bg: #fbbf24;
 }
 
 body {
@@ -13,29 +30,90 @@ body {
   color: var(--text-dark);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-bottom: 80px;
+  transition: background-color 0.3s ease;
 }
 
-/* Modern Container for Content */
 main.container {
-  background: var(--card-bg);
+  background: var(--card-bg) !important;
+  color: var(--text-dark); 
   padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   margin-top: 2rem;
   min-height: 60vh;
 }
 
-/* Row Highlighting with !important to override Bootstrap */
-table tbody tr.highlight-row-match td {
-  background-color: var(--match-green) !important;
-  border-top: 1px solid #22c55e !important;
-  border-bottom: 1px solid #22c55e !important;
+/* --- THE ROW HIGHLIGHTING ENGINE --- */
+
+/* Updated Light Mode Highlights with stronger borders */
+tr.highlight-row-match td {
+  background-color: var(--match-green-light) !important;
+  color: #064e3b !important;
+  border-top: 2px solid #22c55e !important;
+  border-bottom: 2px solid #22c55e !important;
 }
 
-table tbody tr.highlight-row-fuzzy td {
-  background-color: var(--fuzzy-pink) !important;
-  border-top: 1px solid #ec4899 !important;
-  border-bottom: 1px solid #ec4899 !important;
+tr.highlight-row-fuzzy td {
+  background-color: var(--fuzzy-pink-light) !important;
+  color: #701a75 !important;
+  border-top: 2px solid #ec4899 !important;
+  border-bottom: 2px solid #ec4899 !important;
+}
+
+/* Dark Mode Highlights (Consistent with previous fix) */
+[data-theme='dark'] tr.highlight-row-match td {
+  background-color: var(--match-green-dark) !important;
+  color: #ecfdf5 !important;
+  border-top: 1px solid #10b981 !important;
+  border-bottom: 1px solid #10b981 !important;
+}
+
+[data-theme='dark'] tr.highlight-row-fuzzy td {
+  background-color: var(--fuzzy-pink-dark) !important;
+  color: #fdf4ff !important;
+  border-top: 1px solid #d946ef !important;
+  border-bottom: 1px solid #d946ef !important;
+}
+
+/* --- CUSTOM BUTTONS --- */
+.btn-custom-add, .btn-custom-fuzzy {
+  display: inline-block;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  text-decoration: none !important;
+}
+
+.btn-custom-add { background-color: #2563eb; color: #ffffff !important; }
+[data-theme='dark'] .btn-custom-add { background-color: var(--btn-primary-bg); color: #000000 !important; }
+
+.btn-custom-fuzzy { background-color: #64748b; color: #ffffff !important; }
+.btn-custom-fuzzy.active { background-color: #f59e0b; color: #000000 !important; }
+[data-theme='dark'] .btn-custom-fuzzy.active { background-color: var(--btn-warning-bg); color: #000000 !important; }
+
+/* --- TABLE ENGINE --- */
+[data-theme='dark'] .table {
+    color: var(--text-dark) !important;
+}
+
+[data-theme='dark'] .table thead th {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-dark) !important;
+    border-bottom: 2px solid var(--border-color) !important;
+}
+
+[data-theme='dark'] .table td {
+    background-color: transparent; 
+    border-top: 1px solid var(--border-color);
+    color: var(--text-dark) !important;
+}
+
+[data-theme='dark'] .table td a {
+    color: #60a5fa !important;
 }
 
 /* Footer Styling */
@@ -44,12 +122,8 @@ table tbody tr.highlight-row-fuzzy td {
   bottom: 0;
   width: 100%;
   height: 60px;
-  background: white;
+  background-color: var(--card-bg) !important;
   border-top: 1px solid var(--border-color);
   z-index: 1030;
 }
-
-/* Table overrides */
-.table {
-    background-color: transparent !important;
-}
+.footer span, .footer .text-muted { color: var(--text-dark) !important; }

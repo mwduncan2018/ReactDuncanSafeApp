@@ -7,7 +7,6 @@ const ProductList = () => {
     const [isFuzzyEnabled, setIsFuzzyEnabled] = useState(false);
 
     const checkMatch = (product) => {
-        // Exact Match logic (Highlighter lightgreen)
         const isMatch = watchList.some(w => 
             w.manufacturer.toLowerCase() === product.manufacturer.toLowerCase() && 
             w.model.toLowerCase() === product.model.toLowerCase()
@@ -15,7 +14,6 @@ const ProductList = () => {
 
         if (isMatch) return "highlight-row-match";
 
-        // Fuzzy Match logic (Highlighter lightpink)
         if (isFuzzyEnabled) {
             const isFuzzy = watchList.some(w => 
                 w.manufacturer.toLowerCase() === product.manufacturer.toLowerCase() || 
@@ -32,13 +30,18 @@ const ProductList = () => {
             <h1 data-cy="pageTitle">Product List</h1>
 
             <p>
-                <Link data-cy="addNewProductButton" className="btn btn-info float-right" to="/products/create">
+                <Link 
+                    data-cy="addNewProductButton" 
+                    className="btn-custom-add float-right" 
+                    to="/products/create"
+                >
                     Add New Product
                 </Link>
+                
                 <button 
                     data-cy="fuzzyfuzzy" 
                     id="fuzzFuzz" 
-                    className={`btn ${isFuzzyEnabled ? 'btn-danger' : 'btn-warning'} float-right mr-2`}
+                    className={`btn-custom-fuzzy ${isFuzzyEnabled ? 'active' : ''} float-right mr-2`}
                     onClick={() => setIsFuzzyEnabled(!isFuzzyEnabled)}
                 >
                     {isFuzzyEnabled ? "Disable Fuzzy Matching!" : "Enable Fuzzy Matching!"}
