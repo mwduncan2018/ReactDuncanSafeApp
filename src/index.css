@@ -9,6 +9,7 @@
   --fuzzy-pink-light: #f9a8d4;  /* Vibrant Pink */
   
   --border-color: #e2e8f0;
+  --contact-skill-header: #006400; /* DarkGreen for Light Mode */
 }
 
 /* DARK MODE VARIABLES */
@@ -23,7 +24,10 @@
   
   --btn-primary-bg: #60a5fa;
   --btn-warning-bg: #fbbf24;
+  --contact-skill-header: #4ade80; /* Vibrant Light Green for Dark Mode */
 }
+
+
 
 body {
   background-color: var(--bg-main);
@@ -127,3 +131,56 @@ tr.highlight-row-fuzzy td {
   z-index: 1030;
 }
 .footer span, .footer .text-muted { color: var(--text-dark) !important; }
+
+/* --- SKILLS GRID --- */
+.skills-grid {
+    display: grid;
+    /* Creates 3 columns of equal width */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px;
+    padding: 0;
+    list-style-type: none; /* Removes bullets for a cleaner dashboard look */
+    margin-top: 1rem;
+}
+
+.skills-grid li {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 4px;
+    border-left: 3px solid var(--primary); /* Adds a little professional accent */
+}
+
+/* Optional: Make it responsive for mobile/small screens */
+@media (max-width: 600px) {
+    .skills-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* --- CONTACT HEADER LAYOUT --- */
+.contact-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.contact-links {
+    text-align: right;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* On small screens, stack them vertically again */
+@media (max-width: 600px) {
+    .contact-header {
+        flex-direction: column;
+        text-align: left;
+    }
+    .contact-links {
+        text-align: left;
+        margin-top: 1rem;
+    }
+}
