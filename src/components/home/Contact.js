@@ -31,6 +31,7 @@ const Contact = () => {
                 <h4>Skills</h4>
                 <ul data-cy="skillList" id="skillList" className="skills-grid">
                     <li>Playwright</li>
+                    <li>Robot</li>
                     <li>Cypress</li>
                     <li>Appium</li>
                     <li>Selenium</li>

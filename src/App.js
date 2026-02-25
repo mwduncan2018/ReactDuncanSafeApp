@@ -81,9 +81,9 @@ function App() {
                                 <span className="font-weight-bold">DUNCAN SAFE APP</span>
                             </Link>
                             <div className="d-flex flex-row navbar-nav ml-auto">
-                                <Link className="nav-item nav-link px-3" to="/">Product List</Link>
-                                <Link className="nav-item nav-link px-3" to="/watchlist">Watch List</Link>
-                                <Link className="nav-item nav-link px-3" to="/contact">Contact</Link>
+                                <Link data-cy="ProductListNav" className="nav-item nav-link px-3" to="/">Product List</Link>
+                                <Link data-cy="WatchListNav" className="nav-item nav-link px-3" to="/watchlist">Watch List</Link>
+                                <Link data-cy="ContactNav" className="nav-item nav-link px-3" to="/contact">Contact</Link>
                             </div>
                         </div>
                     </nav>
